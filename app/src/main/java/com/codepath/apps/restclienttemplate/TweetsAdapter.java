@@ -42,7 +42,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
         // bind the tweet with the viewholder
         holder.bind(tweet);
-
     }
 
     @Override
