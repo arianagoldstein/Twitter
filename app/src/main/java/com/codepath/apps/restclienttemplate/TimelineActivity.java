@@ -1,10 +1,15 @@
 package com.codepath.apps.restclienttemplate;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +24,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +41,8 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
     Button btnLogOut;
+
+    ActivityResultLauncher<Intent> composeActivityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,28 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setAdapter(adapter);
 
         populateHomeTimeline();
+
+        // code to make newly created Tweets show up on the timeline
+        composeActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        // if the user comes back to this activity from ComposeActivity
+                        // with no error or cancellation:
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            // get the data passed from ComposeActivity
+                            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
+
+                            // adding this tweet to the list of Tweets
+                            tweets.add(0, tweet);
+
+                            // alerting the adapter so that the list is updated and displays the new Tweet
+                            adapter.notifyItemInserted(0);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -75,7 +105,9 @@ public class TimelineActivity extends AppCompatActivity {
 
             // we should navigate from the timeline to the compose activity
             Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-            startActivity(i);
+            i.putExtra("stringToEdit", "CodePath");
+            // startActivity(i);
+            composeActivityResultLauncher.launch(i);
 
             return true;
         }

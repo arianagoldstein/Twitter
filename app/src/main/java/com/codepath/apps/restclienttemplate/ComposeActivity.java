@@ -1,7 +1,13 @@
 package com.codepath.apps.restclienttemplate;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +19,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import okhttp3.Headers;
 
@@ -22,7 +29,6 @@ public class ComposeActivity extends AppCompatActivity {
 
     // tag to use for error readability in the log
     public static final String TAG = "ComposeActivity";
-
 
     // defining the elements in the layout
     EditText etCompose;
@@ -71,6 +77,18 @@ public class ComposeActivity extends AppCompatActivity {
                         try {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
                             Log.i(TAG, "Published tweet: " + tweet);
+
+                            // code that passes the new Tweet back to the timeline to be displayed
+                            // prepare data intent
+                            Intent data = new Intent();
+
+                            // pass back the content of the tweet
+                            data.putExtra("tweet", Parcels.wrap(tweet));
+
+                            // activity finished ok, return the data
+                            setResult(RESULT_OK, data); // set result code and bundle data for response
+                            finish(); // closes the activity, pass data to parent
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -83,7 +101,6 @@ public class ComposeActivity extends AppCompatActivity {
                 });
             }
         });
-
-
     }
+
 }
