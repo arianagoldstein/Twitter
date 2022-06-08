@@ -15,7 +15,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvScreenName"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -29,12 +29,12 @@
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvScreenName"
+        android:layout_below="@+id/tvName"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintTop_toBottomOf="@+id/tvScreenName"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
         tools:text="example tweet!!" />
 
     <ImageView
@@ -47,4 +47,27 @@
         app:layout_constraintTop_toBottomOf="@+id/tvBody"
         tools:srcCompat="@tools:sample/avatars"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:text="TextView"
+        android:textColor="#CCCCCC"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/tvScreenName"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="TextView"
+        android:textColor="#CCCCCC"
+        app:layout_constraintEnd_toStartOf="@+id/tvCreatedAt"
+        app:layout_constraintHorizontal_bias="0.582"
+        app:layout_constraintStart_toEndOf="@+id/tvName"
+        tools:layout_editor_absoluteY="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

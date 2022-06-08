@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     Context context;
@@ -57,6 +62,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvBody;
         TextView tvScreenName;
         ImageView ivTweetImg;
+        TextView tvCreatedAt;
+        TextView tvName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,15 +73,21 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             ivTweetImg = itemView.findViewById(R.id.ivTweetImg);
+            tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
+            tvName = itemView.findViewById(R.id.tvName);
         }
 
         public void bind(Tweet tweet) {
             // updating the elements with this Tweet's information
             tvBody.setText(tweet.body);
-            tvScreenName.setText(tweet.user.screenName);
+            tvName.setText(tweet.user.name);
+            tvScreenName.setText("@" + tweet.user.screenName);
 
             // displaying the profile image using Glide
-            Glide.with(context).load(tweet.user.publicImageUrl).into(ivProfileImage);
+            Glide.with(context)
+                    .load(tweet.user.publicImageUrl)
+                    .transform(new RoundedCorners(400))
+                    .into(ivProfileImage);
 
             // displaying the Tweet image IF it has an image
             if (!tweet.imageUrl.isEmpty()) {
@@ -84,6 +97,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             else {
                 ivTweetImg.setVisibility(View.GONE);
             }
+
+            // finding the time since the tweet was made and updating the createdAt textview
+            String tweetTimeStr = tweet.createdAt; // date string from Tweet
+            String timeToDisplay = getRelativeTimeAgo(tweetTimeStr); // finding difference in time
+            tvCreatedAt.setText(timeToDisplay); // setting the text to display the string
         }
     }
 
@@ -98,5 +116,31 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public void addAll(List<Tweet> list) {
         tweets.addAll(list);
         notifyDataSetChanged();
+    }
+
+    // function to get the time between when the tweet was posted and the current time
+    // example String input: "Mon Apr 01 21:16:23 +0000 2014"
+    public String getRelativeTimeAgo(String rawJsonDate) {
+        // defining the Twitter date format
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+
+        // getting current time
+        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+        sf.setLenient(true);
+
+        String relativeDate = "";
+        try {
+            // getting the time of the tweet
+            long dateMillis = sf.parse(rawJsonDate).getTime();
+
+            // instantiating the string to display
+            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // returning the string to display
+        return relativeDate;
     }
 }
