@@ -8,10 +8,8 @@
 
     <ImageView
         android:id="@+id/ivProfileImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -39,22 +37,22 @@
 
     <ImageView
         android:id="@+id/ivTweetImg"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBody"
-        tools:srcCompat="@tools:sample/avatars"
-        android:visibility="gone"/>
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvCreatedAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="5dp"
         android:text="TextView"
-        android:textColor="#CCCCCC"
+        android:textColor="@color/medium_gray"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/tvScreenName"
         tools:layout_editor_absoluteY="0dp" />
@@ -63,11 +61,21 @@
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="5dp"
         android:text="TextView"
-        android:textColor="#CCCCCC"
+        android:textColor="@color/medium_gray"
         app:layout_constraintEnd_toStartOf="@+id/tvCreatedAt"
         app:layout_constraintHorizontal_bias="0.582"
         app:layout_constraintStart_toEndOf="@+id/tvName"
         tools:layout_editor_absoluteY="0dp" />
+
+    <View
+        android:id="@+id/horizontalLine"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:background="@color/medium_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivTweetImg" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

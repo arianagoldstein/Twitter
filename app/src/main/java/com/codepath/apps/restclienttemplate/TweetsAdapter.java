@@ -81,7 +81,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             // updating the elements with this Tweet's information
             tvBody.setText(tweet.body);
             tvName.setText(tweet.user.name);
-            tvScreenName.setText("@" + tweet.user.screenName);
+            tvScreenName.setText("@" + tweet.user.screenName + " \u2022");
 
             // displaying the profile image using Glide
             Glide.with(context)
