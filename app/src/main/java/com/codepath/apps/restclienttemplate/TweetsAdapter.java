@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+
+import org.parceler.Parcels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -103,6 +106,28 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             String timeToDisplay = getRelativeTimeAgo(tweetTimeStr); // finding difference in time
             tvCreatedAt.setText(timeToDisplay); // setting the text to display the string
         }
+
+        @Override
+        public void onClick(View v) {
+            // get item position
+            int position = getAdapterPosition();
+
+            // check if the position is valid
+            if (position != RecyclerView.NO_POSITION) {
+                // accessing movie at this position
+                Tweet tweet = tweets.get(position);
+
+                // create intent for the new activity
+                Intent intent = new Intent(context, TweetDetailsActivity.class);
+
+                // serialize the movie using Parceler, use its short name as a key
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+
+                // show the activity
+                context.startActivity(intent);
+            }
+        }
+
     }
 
     // functions for the swipe to refresh functionality

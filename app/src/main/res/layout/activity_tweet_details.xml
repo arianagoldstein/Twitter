@@ -3,81 +3,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_height="match_parent"
+    tools:context=".TweetDetailsActivity">
 
     <ImageView
-        android:id="@+id/ivProfileImage"
+        android:id="@+id/ivProfileImageDetails"
         android:layout_width="45dp"
         android:layout_height="45dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvNameDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImageDetails"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImageDetails"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="angoldstein862" />
 
     <TextView
-        android:id="@+id/tvBody"
+        android:id="@+id/tvBodyDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvName"
+        android:layout_below="@+id/tvNameDetails"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        android:layout_toEndOf="@+id/ivProfileImageDetails"
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImageDetails"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameDetails"
         tools:text="example tweet!!" />
 
     <ImageView
-        android:id="@+id/ivTweetImg"
+        android:id="@+id/ivTweetImgDetails"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvBody"
+        app:layout_constraintTop_toBottomOf="@+id/tvBodyDetails"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvCreatedAt"
+        android:id="@+id/tvCreatedAtDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:text="TextView"
         android:textColor="@color/medium_gray"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/tvScreenName"
+        app:layout_constraintStart_toEndOf="@+id/tvScreenNameDetails"
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
-        android:id="@+id/tvScreenName"
+        android:id="@+id/tvScreenNameDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:text="TextView"
         android:textColor="@color/medium_gray"
-        app:layout_constraintEnd_toStartOf="@+id/tvCreatedAt"
+        app:layout_constraintEnd_toStartOf="@+id/tvCreatedAtDetails"
         app:layout_constraintHorizontal_bias="0.582"
-        app:layout_constraintStart_toEndOf="@+id/tvName"
+        app:layout_constraintStart_toEndOf="@+id/tvNameDetails"
         tools:layout_editor_absoluteY="0dp" />
 
     <View
-        android:id="@+id/horizontalLine"
+        android:id="@+id/horizontalLineDetails"
         android:layout_width="0dp"
         android:layout_height="0.5dp"
         android:background="@color/medium_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivTweetImg" />
+        app:layout_constraintTop_toBottomOf="@+id/ivTweetImgDetails" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
