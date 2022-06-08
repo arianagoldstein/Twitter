@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -41,6 +42,7 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
     Button btnLogOut;
+    SwipeRefreshLayout swipeContainer;
 
     ActivityResultLauncher<Intent> composeActivityResultLauncher;
 
@@ -67,6 +69,21 @@ public class TimelineActivity extends AppCompatActivity {
 
         populateHomeTimeline();
 
+        // set up swipe to refresh functionality
+        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchTimelineAsync(0);
+            }
+        });
+
+        // setting the progress bar colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         // code to make newly created Tweets show up on the timeline
         composeActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -85,9 +102,28 @@ public class TimelineActivity extends AppCompatActivity {
 
                             // alerting the adapter so that the list is updated and displays the new Tweet
                             adapter.notifyItemInserted(0);
+
+                            // making the transition smoother when a new Tweet is added
+                            rvTweets.smoothScrollToPosition(0);
                         }
                     }
                 });
+    }
+
+    public void fetchTimelineAsync(int page) {
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                adapter.clear();
+                populateHomeTimeline();
+                swipeContainer.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d("DEBUG", "Fetch timeline error: " + throwable.toString());
+            }
+        });
     }
 
     @Override

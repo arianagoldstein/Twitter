@@ -7,30 +7,40 @@
     android:layout_alignParentStart="false"
     tools:context=".ComposeActivity">
 
-    <EditText
-        android:id="@+id/etCompose"
-        android:layout_width="370dp"
-        android:layout_height="142dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/whats_happening"
-        android:inputType="textMultiLine"
-        android:minLines="5"
-        android:singleLine="false"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tiText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="140"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etCompose"
+            android:layout_width="370dp"
+            android:layout_height="142dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/whats_happening"
+            android:inputType="textMultiLine"
+            android:minLines="5"
+            android:singleLine="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:text="@string/tweet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCompose" />
+        app:layout_constraintTop_toBottomOf="@+id/tiText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

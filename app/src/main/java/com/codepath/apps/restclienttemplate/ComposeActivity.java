@@ -67,7 +67,7 @@ public class ComposeActivity extends AppCompatActivity {
                 }
 
                 // displaying the user's tweet if it fits the requirements
-                Toast.makeText(ComposeActivity.this, "Tweet: " + tweetContent, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(ComposeActivity.this, "Tweet: " + tweetContent, Toast.LENGTH_SHORT).show();
 
                 // make an API call to Twitter to publish the Tweet
                 client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
