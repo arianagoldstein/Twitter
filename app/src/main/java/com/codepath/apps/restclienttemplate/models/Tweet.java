@@ -16,6 +16,7 @@ public class Tweet {
     public String createdAt;
     public User user;
     public String imageUrl;
+    public String id;
 
     // empty constructor needed by the Parceler library
     public Tweet() {
@@ -29,6 +30,7 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.id = jsonObject.getString("id_str");
         tweet.imageUrl = "";
 
         // accessing the media included in the Tweet by the user

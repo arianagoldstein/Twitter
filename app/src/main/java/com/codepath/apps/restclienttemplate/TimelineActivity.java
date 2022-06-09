@@ -44,6 +44,9 @@ public class TimelineActivity extends AppCompatActivity {
     Button btnLogOut;
     SwipeRefreshLayout swipeContainer;
 
+    // instantiating listener for endless scroll
+    private EndlessRecyclerViewScrollListener scrollListener;
+
     ActivityResultLauncher<Intent> composeActivityResultLauncher;
 
     @Override
@@ -62,19 +65,23 @@ public class TimelineActivity extends AppCompatActivity {
         adapter = new TweetsAdapter(this, tweets);
 
         // recycler view setup: layout manager
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(linearLayoutManager);
 
         // recycler view setup: adapter
         rvTweets.setAdapter(adapter);
 
-        populateHomeTimeline();
+        // passing null because we want the first 25 tweets to populate
+        populateHomeTimeline(null);
 
         // set up swipe to refresh functionality
         swipeContainer = findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fetchTimelineAsync(0);
+                // fetchTimelineAsync(0);
+                tweets.clear();
+                populateHomeTimeline(null);
             }
         });
 
@@ -108,23 +115,39 @@ public class TimelineActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        // instantiating scroll listener that listens for when the user scrolls close to the bottom of the list of Tweets
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // triggered only when new data needs to be appended to the list
+                Tweet lastTweetBeingDisplayed = tweets.get(tweets.size() - 1);
+                String maxId = lastTweetBeingDisplayed.id;
+                populateHomeTimeline(maxId);
+            }
+        };
+
+        // adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener);
+
     }
 
-    public void fetchTimelineAsync(int page) {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                adapter.clear();
-                populateHomeTimeline();
-                swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d("DEBUG", "Fetch timeline error: " + throwable.toString());
-            }
-        });
-    }
+    // removing fetchTimelineAsync function because it was redundant
+//    public void fetchTimelineAsync(int page) {
+//        client.getHomeTimeline(null, new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Headers headers, JSON json) {
+//                adapter.clear();
+//                populateHomeTimeline(null);
+//                swipeContainer.setRefreshing(false);
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+//                Log.d("DEBUG", "Fetch timeline error: " + throwable.toString());
+//            }
+//        });
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -151,8 +174,8 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     // this function will populate the timeline with Tweets we get from our Twitter API call
-    private void populateHomeTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
+    private void populateHomeTimeline(String maxId) {
+        client.getHomeTimeline(maxId, new JsonHttpResponseHandler() {
             // function that executes when call is successful
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -160,6 +183,7 @@ public class TimelineActivity extends AppCompatActivity {
                 try {
                     tweets.addAll(Tweet.fromJsonArray(jsonArray));
                     adapter.notifyDataSetChanged();
+                    swipeContainer.setRefreshing(false);
                 } catch (JSONException e) {
                     Log.e(TAG, "Json exception", e);
                     e.printStackTrace();
@@ -172,6 +196,7 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.i(TAG, "onFailure: " + response, throwable);
+                swipeContainer.setRefreshing(false);
             }
         });
     }

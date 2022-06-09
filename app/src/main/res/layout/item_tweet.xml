@@ -19,6 +19,8 @@
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:text="TextView"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="angoldstein862" />
@@ -75,9 +77,26 @@
         android:id="@+id/horizontalLine"
         android:layout_width="0dp"
         android:layout_height="0.5dp"
+        android:layout_marginTop="5dp"
         android:background="@color/medium_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivTweetImg" />
+
+    <TextView
+        android:id="@+id/tv3Dots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:rotation="180"
+        android:text=". . ."
+        android:textColor="@color/medium_gray"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvCreatedAt"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,7 +70,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         if (!tweet.imageUrl.isEmpty()) {
             Glide.with(this)
                     .load(tweet.imageUrl)
-                    .transform(new RoundedCorners(25))
+                    .transform(new RoundedCorners(30))
                     .into(ivTweetImgDetails);
             ivTweetImgDetails.setVisibility(View.VISIBLE);
         } else {
