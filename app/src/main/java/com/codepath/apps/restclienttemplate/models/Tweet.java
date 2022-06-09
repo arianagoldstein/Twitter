@@ -27,7 +27,14 @@ public class Tweet {
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         // creates the Tweet and instantiates its member variables
         Tweet tweet = new Tweet();
-        tweet.body = jsonObject.getString("text");
+
+        // if the Tweet is sufficiently long, make sure we load in the full text
+        if (jsonObject.has("full_text")) {
+            tweet.body = jsonObject.getString("full_text");
+        } else {
+            tweet.body = jsonObject.getString("text");
+        }
+
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.id = jsonObject.getString("id_str");

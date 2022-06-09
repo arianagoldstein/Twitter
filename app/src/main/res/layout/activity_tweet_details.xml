@@ -65,7 +65,10 @@
         app:layout_constraintHorizontal_bias="0.019"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivProfileImageDetails"
-        tools:text="example tweet!!" />
+        tools:text="example tweet!!"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:textColorLink="@color/twitter_blue_fill_pressed" />
 
     <ImageView
         android:id="@+id/ivTweetImgDetails"

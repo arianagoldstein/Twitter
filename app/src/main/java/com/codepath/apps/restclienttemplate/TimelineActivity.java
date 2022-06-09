@@ -44,8 +44,11 @@ public class TimelineActivity extends AppCompatActivity {
     Button btnLogOut;
     SwipeRefreshLayout swipeContainer;
 
-    // instantiating listener for endless scroll
+    // defining listener for endless scroll
     private EndlessRecyclerViewScrollListener scrollListener;
+
+    // defining progress bar
+    MenuItem miActionProgressItem;
 
     ActivityResultLauncher<Intent> composeActivityResultLauncher;
 
@@ -132,26 +135,12 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 
-    // removing fetchTimelineAsync function because it was redundant
-//    public void fetchTimelineAsync(int page) {
-//        client.getHomeTimeline(null, new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Headers headers, JSON json) {
-//                adapter.clear();
-//                populateHomeTimeline(null);
-//                swipeContainer.setRefreshing(false);
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-//                Log.d("DEBUG", "Fetch timeline error: " + throwable.toString());
-//            }
-//        });
-//    }
+    // removed fetchTimelineAsync function because it was redundant
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflate the menu: adds items to the action bar if it is present
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -215,5 +204,16 @@ public class TimelineActivity extends AppCompatActivity {
 
         startActivity(i);
         finish();
+    }
+
+    // functions to show and hide the progress bar
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
     }
 }
