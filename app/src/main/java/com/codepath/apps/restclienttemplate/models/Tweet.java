@@ -33,7 +33,7 @@ public class Tweet {
 
         // accessing the media included in the Tweet by the user
         JSONObject entities = jsonObject.getJSONObject("entities");
-        Log.i("Tweet.java", entities.toString());
+        // Log.i("Tweet.java", entities.toString());
 
         // checking if the user has any media as part of their Tweet
         if (entities.has("media")) {

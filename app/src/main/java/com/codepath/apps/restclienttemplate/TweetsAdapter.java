@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,9 @@ import java.util.Locale;
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     Context context;
     List<Tweet> tweets;
+
+    // tag to use for error readability in the log
+    public static final String TAG = "TweetsAdapter";
 
     // constructor that instantiates the context and tweets member variables
     public TweetsAdapter(Context context, List<Tweet> tweets) {
@@ -58,7 +62,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     // define a viewholder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // defining the elements in the layout
         ImageView ivProfileImage;
@@ -78,6 +82,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivTweetImg = itemView.findViewById(R.id.ivTweetImg);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             tvName = itemView.findViewById(R.id.tvName);
+
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Tweet tweet) {
@@ -94,10 +100,12 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             // displaying the Tweet image IF it has an image
             if (!tweet.imageUrl.isEmpty()) {
-                Glide.with(context).load(tweet.imageUrl).into(ivTweetImg);
+                Glide.with(context)
+                        .load(tweet.imageUrl)
+                        .transform(new RoundedCorners(20))
+                        .into(ivTweetImg);
                 ivTweetImg.setVisibility(View.VISIBLE);
-            }
-            else {
+            } else {
                 ivTweetImg.setVisibility(View.GONE);
             }
 
@@ -107,8 +115,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvCreatedAt.setText(timeToDisplay); // setting the text to display the string
         }
 
+
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             // get item position
             int position = getAdapterPosition();
 
@@ -128,7 +137,33 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             }
         }
 
+        // function to get the time between when the tweet was posted and the current time
+        // example String input: "Mon Apr 01 21:16:23 +0000 2014"
+        public String getRelativeTimeAgo(String rawJsonDate) {
+            // defining the Twitter date format
+            String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+
+            // getting current time
+            SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+            sf.setLenient(true);
+
+            String relativeDate = "";
+            try {
+                // getting the time of the tweet
+                long dateMillis = sf.parse(rawJsonDate).getTime();
+
+                // instantiating the string to display
+                relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+                        System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            // returning the string to display
+            return relativeDate;
+        }
     }
+
 
     // functions for the swipe to refresh functionality
     // clean all elements of the recycler
@@ -141,31 +176,5 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public void addAll(List<Tweet> list) {
         tweets.addAll(list);
         notifyDataSetChanged();
-    }
-
-    // function to get the time between when the tweet was posted and the current time
-    // example String input: "Mon Apr 01 21:16:23 +0000 2014"
-    public String getRelativeTimeAgo(String rawJsonDate) {
-        // defining the Twitter date format
-        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-
-        // getting current time
-        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
-        sf.setLenient(true);
-
-        String relativeDate = "";
-        try {
-            // getting the time of the tweet
-            long dateMillis = sf.parse(rawJsonDate).getTime();
-
-            // instantiating the string to display
-            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
-                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        // returning the string to display
-        return relativeDate;
     }
 }

@@ -6,17 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".TweetDetailsActivity">
 
+    <TextView
+        android:id="@+id/tvCreatedAtDateDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="@color/medium_gray"
+        app:layout_constraintStart_toEndOf="@+id/tvCreatedAtTimeDetails"
+        app:layout_constraintTop_toBottomOf="@+id/ivTweetImgDetails" />
+
+    <TextView
+        android:id="@+id/tvCreatedAtTimeDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="@color/medium_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivTweetImgDetails" />
+
     <ImageView
         android:id="@+id/ivProfileImageDetails"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvNameDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
         android:layout_toEndOf="@+id/ivProfileImageDetails"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImageDetails"
@@ -28,55 +55,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNameDetails"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:layout_toEndOf="@+id/ivProfileImageDetails"
-        app:layout_constraintStart_toEndOf="@+id/ivProfileImageDetails"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameDetails"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivProfileImageDetails"
         tools:text="example tweet!!" />
 
     <ImageView
         android:id="@+id/ivTweetImgDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_width="311dp"
+        android:layout_height="216dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBodyDetails"
+        app:layout_constraintVertical_bias="0.02"
         tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvCreatedAtDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="TextView"
-        android:textColor="@color/medium_gray"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/tvScreenNameDetails"
-        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/tvScreenNameDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         android:text="TextView"
         android:textColor="@color/medium_gray"
-        app:layout_constraintEnd_toStartOf="@+id/tvCreatedAtDetails"
-        app:layout_constraintHorizontal_bias="0.582"
-        app:layout_constraintStart_toEndOf="@+id/tvNameDetails"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImageDetails"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameDetails" />
 
     <View
         android:id="@+id/horizontalLineDetails"
         android:layout_width="0dp"
         android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
         android:background="@color/medium_gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivTweetImgDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCreatedAtDateDetails" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
