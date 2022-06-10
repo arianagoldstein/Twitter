@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -41,6 +42,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+
+    public static final int REQUEST_CODE = 20;
 
     // constructor that instantiates the context and tweets member variables
     public TweetsAdapter(Context context, List<Tweet> tweets) {
@@ -209,7 +212,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     i.putExtra("should_reply_to_tweet", true);
                     i.putExtra("id_of_tweet_to_reply_to", tweet.id);
                     i.putExtra("screenname_of_tweet_to_reply_to", tweet.user.screenName);
-                    context.startActivity(i);
+                    ((Activity) context).startActivityForResult(i, TweetsAdapter.REQUEST_CODE);
+                    // context.startActivity(i);
                 }
             });
         }
