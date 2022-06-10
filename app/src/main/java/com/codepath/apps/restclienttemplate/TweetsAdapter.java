@@ -108,6 +108,15 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName.setText("@" + tweet.user.screenName + " \u2022");
             tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
 
+            // setting heart appearance based on favorite status
+            if (tweet.isFavorited) {
+                Drawable fullImg = context.getDrawable(R.drawable.fullheart);
+                ibFavorite.setBackground(fullImg);
+            } else {
+                Drawable emptyImg = context.getDrawable(R.drawable.emptyheart);
+                ibFavorite.setBackground(emptyImg);
+            }
+
             // displaying the profile image using Glide
             Glide.with(context)
                     .load(tweet.user.publicImageUrl)
@@ -140,7 +149,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         // making front-end look like we've liked the tweet
                         // changing the heart to be full
                         Drawable fullImg = context.getDrawable(R.drawable.fullheart);
-                        // ibFavorite.setImageDrawable(fullImg);
                         ibFavorite.setBackground(fullImg);
                         tweet.isFavorited = true;
                         tweet.favoriteCount += 1;
@@ -166,7 +174,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         // making front-end look like we've un-liked the tweet
                         // changing the heart to be empty
                         Drawable emptyImg = context.getDrawable(R.drawable.emptyheart);
-                        // ibFavorite.setImageDrawable(emptyImg);
                         ibFavorite.setBackground(emptyImg);
                         tweet.isFavorited = false;
                         tweet.favoriteCount -= 1;
