@@ -13,6 +13,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -84,6 +86,8 @@ public class TimelineActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#FFFFFF"));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         // passing null because we want the first 25 tweets to populate
         populateHomeTimeline(null);
