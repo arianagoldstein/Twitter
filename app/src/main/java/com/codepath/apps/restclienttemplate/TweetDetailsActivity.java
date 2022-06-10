@@ -2,9 +2,11 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +31,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     TextView tvCreatedAtTimeDetails;
     TextView tvCreatedAtDateDetails;
     TextView tvNameDetails;
+    ImageButton ibFavoriteDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
         ivProfileImageDetails = findViewById(R.id.ivProfileImageDetails);
         ivTweetImgDetails = findViewById(R.id.ivTweetImgDetails);
+
+        ibFavoriteDetails = findViewById(R.id.ibFavoriteDetails);
 
         // populating details page
         tvBodyDetails.setText(tweet.body);
@@ -75,6 +80,16 @@ public class TweetDetailsActivity extends AppCompatActivity {
             ivTweetImgDetails.setVisibility(View.VISIBLE);
         } else {
             ivTweetImgDetails.setVisibility(View.GONE);
+        }
+
+        // displaying favorite heart based on whether the tweet is liked or not
+        // setting heart appearance based on favorite status
+        if (tweet.isFavorited) {
+            Drawable fullImg = this.getDrawable(R.drawable.fullheart);
+            ibFavoriteDetails.setBackground(fullImg);
+        } else {
+            Drawable emptyImg = this.getDrawable(R.drawable.emptyheart);
+            ibFavoriteDetails.setBackground(emptyImg);
         }
     }
 }

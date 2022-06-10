@@ -97,11 +97,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tvNameDetails" />
 
     <View
-        android:id="@+id/horizontalLineDetails"
+        android:id="@+id/horizontalLineDetails1"
         android:layout_width="0dp"
         android:layout_height="0.5dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/medium_gray"
+        app:layout_constraintBottom_toTopOf="@+id/llLikeBarDetails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,6 +124,73 @@
         app:layout_constraintHorizontal_bias="0.98"
         app:layout_constraintStart_toEndOf="@+id/tvNameDetails"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/llLikeBarDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalLineDetails1">
+
+
+        <ImageButton
+            android:id="@+id/ibReplyDetails"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/reply"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivProfileImageDetails"
+            app:layout_constraintTop_toBottomOf="@+id/ivTweetImgDetails" />
+
+
+        <ImageButton
+            android:id="@+id/ibRetweetDetails"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/retweet"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivProfileImageDetails"
+            app:layout_constraintTop_toBottomOf="@+id/ivTweetImgDetails" />
+
+
+        <ImageButton
+            android:id="@+id/ibFavoriteDetails"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/emptyheart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivProfileImageDetails"
+            app:layout_constraintTop_toBottomOf="@+id/ivTweetImgDetails" />
+
+
+        <ImageButton
+            android:id="@+id/ibShareDetails"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/share"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivProfileImageDetails"
+            app:layout_constraintTop_toBottomOf="@+id/ivTweetImgDetails" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/horizontalLineDetails2"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/medium_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llLikeBarDetails" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
