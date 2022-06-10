@@ -21,6 +21,9 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView ivProfileImageProfile;
     TextView tvNameProfile;
     TextView tvScreenNameProfile;
+    TextView tvDescription;
+    TextView tvFollowers;
+    TextView tvFollowing;
 
     User user;
 
@@ -33,23 +36,30 @@ public class ProfileActivity extends AppCompatActivity {
         ivProfileImageProfile = findViewById(R.id.ivProfileImageProfile);
         tvNameProfile = findViewById(R.id.tvNameProfile);
         tvScreenNameProfile = findViewById(R.id.tvScreenNameProfile);
+        tvDescription = findViewById(R.id.tvDescription);
+        tvFollowers = findViewById(R.id.tvFollowers);
+        tvFollowing = findViewById(R.id.tvFollowing);
 
         // unwrapping the user from the parcel
         user = (User) Parcels.unwrap(getIntent().getParcelableExtra("user"));
 
-        String imageUrl = user.publicImageUrl;
-        String name = user.name;
-        String screenName = user.screenName;
-
         // populating the profile screen
-        tvNameProfile.setText(name);
-        tvScreenNameProfile.setText("@" + screenName);
+        tvNameProfile.setText(user.name);
+        tvScreenNameProfile.setText("@" + user.screenName);
+        tvDescription.setText(user.description);
+        tvFollowers.setText(user.followersCount + " followers");
+        tvFollowing.setText(user.followingCount + " following");
+
 
         // displaying the profile image using Glide
         Glide.with(this)
-                .load(imageUrl)
+                .load(user.publicImageUrl)
                 .transform(new RoundedCorners(400))
                 .into(ivProfileImageProfile);
+
+
+        // adding followers and following list
+
     }
 
     public void backFromProfile(View view) {

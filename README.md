@@ -2,7 +2,7 @@
 
 **Twitter** is an android app that allows a user to view their Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **X** hours spent in total
+Time spent: **23** hours spent in total
 
 ## User Stories
 
@@ -32,6 +32,7 @@ The following **optional** features are implemented:
 * [x] User can view more tweets as they scroll with infinite pagination
 * [x] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
 * [x] Replace all icon drawables and other static image assets with [vector drawables](http://guides.codepath.org/android/Drawables#vector-drawables) where appropriate.
+* [x] User can view following / followers count through any profile they view.
 
 ## Video Walkthrough
 
