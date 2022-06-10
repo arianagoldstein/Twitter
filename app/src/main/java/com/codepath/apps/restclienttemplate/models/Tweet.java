@@ -17,6 +17,10 @@ public class Tweet {
     public User user;
     public String imageUrl;
     public String id;
+    public boolean isFavorited;
+    public boolean isRetweeted;
+    public int favoriteCount;
+    public int retweetCount;
 
     // empty constructor needed by the Parceler library
     public Tweet() {
@@ -25,6 +29,9 @@ public class Tweet {
 
     // constructs a Tweet given a JSON object
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
+        if (jsonObject.has("retweeted_status")) {
+            return null;
+        }
         // creates the Tweet and instantiates its member variables
         Tweet tweet = new Tweet();
 
@@ -35,10 +42,15 @@ public class Tweet {
             tweet.body = jsonObject.getString("text");
         }
 
+        // getting information from the JSON object that is returned
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.id = jsonObject.getString("id_str");
         tweet.imageUrl = "";
+        tweet.isFavorited = jsonObject.getBoolean("favorited");
+        tweet.isRetweeted = jsonObject.getBoolean("retweeted");
+        tweet.favoriteCount = jsonObject.getInt("favorite_count");
+        tweet.retweetCount = jsonObject.getInt("retweet_count");
 
         // accessing the media included in the Tweet by the user
         JSONObject entities = jsonObject.getJSONObject("entities");
@@ -65,7 +77,10 @@ public class Tweet {
         List<Tweet> tweets = new ArrayList<>();
         // converts each JSON object in the array to a Tweet object
         for (int i = 0; i < jsonArray.length(); i++) {
-            tweets.add(fromJson(jsonArray.getJSONObject(i)));
+            Tweet tweetToAdd = fromJson(jsonArray.getJSONObject(i));
+            if (tweetToAdd != null) {
+                tweets.add(tweetToAdd);
+            }
         }
         // returns the newly created list of Tweets
         return tweets;

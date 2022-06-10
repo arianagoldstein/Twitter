@@ -48,7 +48,6 @@ public class TwitterClient extends OAuthBaseClient {
 	// endpoint to get a user's timeline
 	public void getHomeTimeline(String maxId, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
-		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("count", "25");
 		params.put("since_id", "1");
@@ -65,7 +64,6 @@ public class TwitterClient extends OAuthBaseClient {
 	// endpoint to get a user's info (for compose and profile screen)
 	public void getUserInfo(JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("account/verify_credentials.json");
-		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		client.get(apiUrl, params, handler);
 	}
@@ -73,9 +71,24 @@ public class TwitterClient extends OAuthBaseClient {
 	// endpoint to publish a new tweet
 	public void publishTweet(String tweetContent, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/update.json");
-		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("status", tweetContent);
+		client.post(apiUrl, params, "", handler);
+	}
+
+	// endpoint to favorite a tweet
+	public void favoriteTweet(String tweetId, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/create.json");
+		RequestParams params = new RequestParams();
+		params.put("id", tweetId);
+		client.post(apiUrl, params, "", handler);
+	}
+
+	// endpoint to un-favorite a tweet
+	public void unfavoriteTweet(String tweetId, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/destroy.json");
+		RequestParams params = new RequestParams();
+		params.put("id", tweetId);
 		client.post(apiUrl, params, "", handler);
 	}
 

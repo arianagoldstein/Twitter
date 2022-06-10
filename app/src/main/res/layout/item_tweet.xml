@@ -99,24 +99,25 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.851"
         app:layout_constraintStart_toEndOf="@+id/tvCreatedAt"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/ibFavorite"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@android:color/transparent"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/emptyheart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintTop_toBottomOf="@+id/ivTweetImg"
-        app:srcCompat="@drawable/ic_vector_heart_stroke" />
+        app:layout_constraintTop_toBottomOf="@+id/ivTweetImg" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvFavoriteCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/ibFavorite"
         app:layout_constraintTop_toBottomOf="@+id/ivTweetImg" />
