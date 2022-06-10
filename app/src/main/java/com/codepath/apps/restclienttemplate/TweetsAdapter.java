@@ -84,6 +84,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvName;
         ImageButton ibFavorite;
         TextView tvFavoriteCount;
+        ImageButton ibReply;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,6 +98,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvName = itemView.findViewById(R.id.tvName);
             ibFavorite = itemView.findViewById(R.id.ibFavorite);
             tvFavoriteCount = itemView.findViewById(R.id.tvFavoriteCount);
+            ibReply = itemView.findViewById(R.id.ibReply);
 
             itemView.setOnClickListener(this);
         }
@@ -139,7 +141,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             String timeToDisplay = getRelativeTimeAgo(tweetTimeStr); // finding difference in time
             tvCreatedAt.setText(timeToDisplay); // setting the text to display the string
 
-            // setting up a click listener for the imageButton
+            // setting up a click listener for the imageButton for FAVORITE
             ibFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -195,6 +197,19 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                             }
                         });
                     }
+                }
+            });
+
+            // setting up a click listener for the imageButton for REPLY
+            ibReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // create intent to go to Compose screen and indicate that we should be replying
+                    Intent i = new Intent(context, ComposeActivity.class);
+                    i.putExtra("should_reply_to_tweet", true);
+                    i.putExtra("id_of_tweet_to_reply_to", tweet.id);
+                    i.putExtra("screenname_of_tweet_to_reply_to", tweet.user.screenName);
+                    context.startActivity(i);
                 }
             });
         }

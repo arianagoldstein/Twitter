@@ -40,6 +40,36 @@ public class ComposeActivity extends AppCompatActivity {
 
     TwitterClient client;
 
+    JsonHttpResponseHandler handler = new JsonHttpResponseHandler() {
+        @Override
+        public void onSuccess(int statusCode, Headers headers, JSON json) {
+            Log.i(TAG, "Successfully published Tweet!");
+            try {
+                Tweet tweet = Tweet.fromJson(json.jsonObject);
+                Log.i(TAG, "Published tweet: " + tweet);
+
+                // code that passes the new Tweet back to the timeline to be displayed
+                // prepare data intent
+                Intent data = new Intent();
+
+                // pass back the content of the tweet
+                data.putExtra("tweet", Parcels.wrap(tweet));
+
+                // activity finished ok, return the data
+                setResult(RESULT_OK, data); // set result code and bundle data for response
+                finish(); // closes the activity, pass data to parent
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+            Log.e(TAG, "Error publishing Tweet.", throwable);
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,38 +113,26 @@ public class ComposeActivity extends AppCompatActivity {
                 // displaying the user's tweet if it fits the requirements
                 // Toast.makeText(ComposeActivity.this, "Tweet: " + tweetContent, Toast.LENGTH_SHORT).show();
 
-                // make an API call to Twitter to publish the Tweet
-                client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Headers headers, JSON json) {
-                        Log.i(TAG, "Successfully published Tweet!");
-                        try {
-                            Tweet tweet = Tweet.fromJson(json.jsonObject);
-                            Log.i(TAG, "Published tweet: " + tweet);
+                // if we're replying to a Tweet, call replyToTweet()
+                if (getIntent().hasExtra("should_reply_to_tweet")) {
+                    // getting necessary information to make the API call
+                    String idOfTweetToReplyTo = getIntent().getStringExtra("id_of_tweet_to_reply_to");
+                    String screenName = getIntent().getStringExtra("screenname_of_tweet_to_reply_to");
+                    client.replyToTweet(idOfTweetToReplyTo, "@" + screenName + " " + tweetContent, handler);
+                }
+                // else, we're creating a whole new Tweet so we want to call publishTweet()
+                else {
+                    // make an API call to Twitter to publish the Tweet
+                    client.publishTweet(tweetContent, handler);
+                }
 
-                            // code that passes the new Tweet back to the timeline to be displayed
-                            // prepare data intent
-                            Intent data = new Intent();
-
-                            // pass back the content of the tweet
-                            data.putExtra("tweet", Parcels.wrap(tweet));
-
-                            // activity finished ok, return the data
-                            setResult(RESULT_OK, data); // set result code and bundle data for response
-                            finish(); // closes the activity, pass data to parent
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                        Log.e(TAG, "Error publishing Tweet.", throwable);
-                    }
-                });
             }
         });
+    }
+
+    public void backFromCompose(View view) {
+        Log.i("ComposeActivity", "backFromCompose");
+        finish();
     }
 
 }

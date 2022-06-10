@@ -46,7 +46,6 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
-    Button btnLogOut;
     SwipeRefreshLayout swipeContainer;
     User user;
 
@@ -253,6 +252,19 @@ public class TimelineActivity extends AppCompatActivity {
 
         startActivity(i);
         finish();
+    }
+
+    // logs out the user and brings them back to the login screen
+    public void goToProfile(View view) {
+        Log.i(TAG, "goToProfile");
+
+        // creating a new intent to go to the profile screen
+        Intent i = new Intent(this, ProfileActivity.class);
+
+        i.putExtra("url", user.publicImageUrl);
+        i.putExtra("name", user.name);
+        i.putExtra("screen_name", user.screenName);
+        startActivity(i);
     }
 
     // functions to show and hide the progress bar

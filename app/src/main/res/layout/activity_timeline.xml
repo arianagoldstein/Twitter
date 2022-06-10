@@ -32,16 +32,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toTopOf="@+id/btnLogOut" />
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/btnLogOut"
-        android:layout_width="184dp"
+        android:layout_width="100dp"
         android:layout_height="27dp"
         android:background="@color/twitter_blue"
         android:onClick="logOut"
         android:text="LOG OUT"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/twitter_blue"
+        app:srcCompat="@drawable/profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="goToProfile" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
