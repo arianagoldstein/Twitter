@@ -13,8 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -33,8 +36,10 @@ public class ComposeActivity extends AppCompatActivity {
     // defining the elements in the layout
     EditText etCompose;
     Button btnTweet;
+    ImageView ivProfileImageCompose;
 
     TwitterClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,15 @@ public class ComposeActivity extends AppCompatActivity {
         // instantiating the view objects with their corresponding elements in the layout
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
+        ivProfileImageCompose = findViewById(R.id.ivProfileImageCompose);
+
+        String imageUrl = getIntent().getStringExtra("url");
+
+        // displaying the profile image using Glide
+        Glide.with(this)
+                .load(imageUrl)
+                .transform(new RoundedCorners(400))
+                .into(ivProfileImageCompose);
 
         // setting a click listener for the button
         btnTweet.setOnClickListener(new View.OnClickListener() {

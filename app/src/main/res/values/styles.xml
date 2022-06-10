@@ -2,7 +2,14 @@
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/twitter_blue_50</item>
+        <item name="colorPrimary">@color/twitter_blue</item>
+        <item name="colorPrimaryVariant">@color/twitter_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/twitter_blue_fill_pressed</item>
+        <item name="colorSecondaryVariant">@color/twitter_blue_fill_pressed</item>
+        <item name="colorOnSecondary">@color/black</item>
+
     </style>
 
     <!-- Application theme. -->

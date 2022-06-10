@@ -21,10 +21,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class TimelineActivity extends AppCompatActivity {
     TweetsAdapter adapter;
     Button btnLogOut;
     SwipeRefreshLayout swipeContainer;
+    User user;
 
     // defining listener for endless scroll
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -76,6 +79,9 @@ public class TimelineActivity extends AppCompatActivity {
 
         // passing null because we want the first 25 tweets to populate
         populateHomeTimeline(null);
+
+        // getting the current user
+        getCurrentUser();
 
         // set up swipe to refresh functionality
         swipeContainer = findViewById(R.id.swipeContainer);
@@ -135,6 +141,27 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 
+    // calls the get user endpoint from the API
+    private void getCurrentUser() {
+        client.getUserInfo(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    user = User.fromJson(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i(TAG, "onSuccess for getCurrentUser: " + json.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.i(TAG, "onFailure for getCurrentUser: " + response, throwable);
+            }
+        });
+    }
+
     // removed fetchTimelineAsync function because it was redundant
 
     @Override
@@ -153,7 +180,8 @@ public class TimelineActivity extends AppCompatActivity {
 
             // we should navigate from the timeline to the compose activity
             Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-            i.putExtra("stringToEdit", "CodePath");
+            String url = user.publicImageUrl;
+            i.putExtra("url", url);
             // startActivity(i);
             composeActivityResultLauncher.launch(i);
 
