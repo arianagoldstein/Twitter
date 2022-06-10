@@ -11,12 +11,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.User;
+
+import org.parceler.Parcels;
 
 public class ProfileActivity extends AppCompatActivity {
 
     ImageView ivProfileImageProfile;
     TextView tvNameProfile;
     TextView tvScreenNameProfile;
+
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +34,12 @@ public class ProfileActivity extends AppCompatActivity {
         tvNameProfile = findViewById(R.id.tvNameProfile);
         tvScreenNameProfile = findViewById(R.id.tvScreenNameProfile);
 
-        String imageUrl = getIntent().getStringExtra("url");
-        String name = getIntent().getStringExtra("name");
-        String screenName = getIntent().getStringExtra("screen_name");
+        // unwrapping the user from the parcel
+        user = (User) Parcels.unwrap(getIntent().getParcelableExtra("user"));
+
+        String imageUrl = user.publicImageUrl;
+        String name = user.name;
+        String screenName = user.screenName;
 
         // populating the profile screen
         tvNameProfile.setText(name);

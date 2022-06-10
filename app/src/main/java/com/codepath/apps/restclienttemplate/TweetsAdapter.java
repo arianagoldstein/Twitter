@@ -27,6 +27,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import okhttp3.Headers;
 
@@ -88,6 +90,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageButton ibFavorite;
         TextView tvFavoriteCount;
         ImageButton ibReply;
+        TextView tvRetweetCount;
+        TextView tvReplyCount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,6 +106,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ibFavorite = itemView.findViewById(R.id.ibFavorite);
             tvFavoriteCount = itemView.findViewById(R.id.tvFavoriteCount);
             ibReply = itemView.findViewById(R.id.ibReply);
+            tvRetweetCount = itemView.findViewById(R.id.tvRetweetCount);
+            tvReplyCount = itemView.findViewById(R.id.tvReplyCount);
 
             itemView.setOnClickListener(this);
         }
@@ -112,6 +118,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvName.setText(tweet.user.name);
             tvScreenName.setText("@" + tweet.user.screenName + " \u2022");
             tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
+            tvRetweetCount.setText(String.valueOf(tweet.retweetCount));
+
+            // generating a random number of replies because current API version doesn't support it
+            int randNumReplies = ThreadLocalRandom.current().nextInt(0, 100);
+            tvReplyCount.setText(String.valueOf(randNumReplies));
 
             // setting heart appearance based on favorite status
             if (tweet.isFavorited) {
@@ -214,6 +225,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     i.putExtra("screenname_of_tweet_to_reply_to", tweet.user.screenName);
                     ((Activity) context).startActivityForResult(i, TweetsAdapter.REQUEST_CODE);
                     // context.startActivity(i);
+                }
+            });
+
+            // listener to go to the profile page from this tweet
+            ivProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, ProfileActivity.class);
+
+                    // pass the content of the user who composed the tweet
+                    i.putExtra("user", Parcels.wrap(tweet.user));
+                    context.startActivity(i);
                 }
             });
         }

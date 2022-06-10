@@ -260,10 +260,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         // creating a new intent to go to the profile screen
         Intent i = new Intent(this, ProfileActivity.class);
-
-        i.putExtra("url", user.publicImageUrl);
-        i.putExtra("name", user.name);
-        i.putExtra("screen_name", user.screenName);
+        i.putExtra("user", Parcels.wrap(user));
         startActivity(i);
     }
 
