@@ -129,6 +129,9 @@ public class TimelineActivity extends AppCompatActivity {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                if (miActionProgressItem != null) {
+                    showProgressBar();
+                }
                 // triggered only when new data needs to be appended to the list
                 Tweet lastTweetBeingDisplayed = tweets.get(tweets.size() - 1);
                 String maxId = lastTweetBeingDisplayed.id;
@@ -153,11 +156,17 @@ public class TimelineActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Log.i(TAG, "onSuccess for getCurrentUser: " + json.toString());
+                if (miActionProgressItem != null) {
+                    hideProgressBar();
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.i(TAG, "onFailure for getCurrentUser: " + response, throwable);
+                if (miActionProgressItem != null) {
+                    hideProgressBar();
+                }
             }
         });
     }
