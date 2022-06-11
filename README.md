@@ -38,7 +38,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-[Video Walkthrough](https://imgur.com/a/iHuIulq)
+[Video Walkthrough](https://imgur.com/a/Tu93wxC)
 
 GIF created with [Kap](https://getkap.co/).
 
